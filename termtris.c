@@ -24,6 +24,7 @@ void init() {
     cbreak();               // disable line buffering
     noecho();               // don't show input on screen
     nodelay(stdscr, TRUE);  // no delay on inputs
+    nocbreak();               // disable line buffering
 
     // init board
     for(int y = 0; y < HEIGHT; y++) {
@@ -44,9 +45,12 @@ int updateInput() {
 
     // get user inputs
     char c;
-    while((c = getch()) != ERR){
-        if(c == 'q'){
-            return 0;
+    while((c = getch()) != ERR) {
+        switch(c) {
+            case 'q':
+                return 0;
+            case 'w':
+                board[0][0] = 'w';
         }
     }
 
@@ -66,7 +70,5 @@ void render() {
         }
     }
 
-    refresh();              // print it onto the real screen
-
-    getch();
+    refresh();              // print it onto the real screen  
 }
