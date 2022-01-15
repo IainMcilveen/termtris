@@ -7,8 +7,8 @@ int main() {
     
     // game loop
     while(gameRunning) {
-        gameRunning = updateInput();
-        update();
+        updateInput();
+        gameRunning = update();
         render();
     }
 
@@ -24,7 +24,7 @@ void init() {
     cbreak();               // disable line buffering
     noecho();               // don't show input on screen
     nodelay(stdscr, TRUE);  // no delay on inputs
-    nocbreak();               // disable line buffering
+    nocbreak();             // disable line buffering
 
     // init board
     for(int y = 0; y < HEIGHT; y++) {
@@ -32,6 +32,8 @@ void init() {
             board[y][x] = ' ';
         }
     }
+
+    
 
     // temp
     board[0][0] = 'x';
@@ -41,24 +43,30 @@ void init() {
 
 }
 
-int updateInput() {
+void updateInput() {
 
-    // get user inputs
+    // get user inputs {'A','D','N','M','Q','S'}
     char c;
     while((c = getch()) != ERR) {
         switch(c) {
+            case 'a':
+                input[0] = 1;
+            case 'd':
+                input[1] = 1;
+            case 'n':
+                input[2] = 1;
+            case 'm':
+                input[3] = 1;
             case 'q':
-                return 0;
-            case 'w':
-                board[0][0] = 'w';
+                input[4] = 1;
+            case 's':
+                input[5] = 1;
         }
     }
-
-    return 1;
 }
 
-void update() {
-
+int update() {
+    return 1;
 }
 
 void render() {
@@ -70,5 +78,6 @@ void render() {
         }
     }
 
-    refresh();              // print it onto the real screen  
+    // print it onto the real screen
+    refresh();   
 }
