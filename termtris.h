@@ -1,6 +1,7 @@
 // includes
 #include <ncurses.h> // includes stdio.h
 #include <stdlib.h>
+#include <time.h>
 
 // Define constants
 #define WIDTH   10
@@ -89,7 +90,10 @@ Piece i = {
     }
 };
 
-Piece pieces[7];
+Piece* pieces;
+Piece nextPiece;
+Piece curPiece;
+
 // Define Function
 void init();
 void updateInput();

@@ -33,7 +33,23 @@ void init() {
         }
     }
 
-    
+    // allocate pieces array and add pieces
+    pieces = malloc(sizeof(Piece) * 7);
+    pieces[0] = t;
+    pieces[1] = j;
+    pieces[2] = z;
+    pieces[3] = o;
+    pieces[4] = s;
+    pieces[5] = l;
+    pieces[6] = i;
+
+    // randomly set cur and next piece
+    srand(time(NULL));  // seed random numbers
+    int cur = rand() % 7;
+    int next = rand() % 7;
+    curPiece.col = pieces[cur].col;
+    curPiece.row = pieces[cur].row;
+    curPiece.rots = pieces[cur].rots;
 
     // temp
     board[0][0] = 'x';
