@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
+#include <string.h>
 
 // Define constants
 #define WIDTH   10

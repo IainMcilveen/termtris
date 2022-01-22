@@ -317,9 +317,9 @@ void render() {
     }
   }
 
-  //draw current Piece
+  // draw current Piece
   char posX, posY;
-  for(int i = 0; i < 4; i++){
+  for(int i = 0; i < 4; i++) {
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
     mvaddch(bStartY + posY,bStartX + posX,'X');
@@ -333,6 +333,38 @@ void render() {
   for(int x = 0; x < 12; x++) {
     mvaddch(bStartY, bStartX - 1 + x, '-');
     mvaddch(bStartY + 20, bStartX - 1 + x, '-');
+  }
+
+  int nStartX, nStartY;
+
+  nStartX = COLS / 2 + 7;
+  nStartY = LINES / 2 - 1;
+
+  // clear next Piece area
+  for(int y = nStartY; y < nStartY + 5; y++) {
+    for(int x = nStartX; x < nStartX + 5; x++) {
+      mvaddch(y,x,' ');
+    }
+  }
+
+  // next text
+  mvprintw(nStartY - 2, nStartX, "next \n");
+
+  // draw next Piece
+  for(int i = 0; i < 4; i++) {
+    posX = pieceRotations[nextPiece.index][0][i][0] - 3;
+    posY = pieceRotations[nextPiece.index][0][i][1];
+    mvaddch(nStartY + posY,nStartX + posX,'X');
+  }
+
+  // draw next Piece border
+  for(int i = 0; i < 3; i++) {
+    mvaddch(nStartY + i, nStartX - 1, '|');
+    mvaddch(nStartY + i, nStartX + 5, '|');
+  }
+  for(int i = 0; i < 7; i++) {
+    mvaddch(nStartY - 1, nStartX - 1 + i, '-');
+    mvaddch(nStartY + 3, nStartX - 1 + i, '-');
   }
 
   // print it onto the real screen
