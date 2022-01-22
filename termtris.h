@@ -123,4 +123,4 @@ void updatePieceDown();
 void updatePieceRotation();
 void placePiece();
 void checkForLineClear();
-void clearLine(char);
+void clearLine(int);

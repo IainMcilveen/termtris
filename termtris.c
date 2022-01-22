@@ -287,12 +287,13 @@ void checkForLineClear() {
 
     if(canClear == 1){
       clearLine(y);
+      y++;
     }
   }
 
 }
 
-void clearLine(char row) {
+void clearLine(int row) {
   for(int y = row; y >= 1; y--) {
     for(int x = 0; x < 10; x++) {
       board[y][x] = board[y-1][x];
