@@ -102,7 +102,7 @@ Piece l = {
   .rot = 0
 };
 Piece i = {
-  .row = 0,
+  .row = 1,
   .col = 0,
   .index = 6,
   .rot = 0

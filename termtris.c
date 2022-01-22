@@ -272,6 +272,7 @@ void placePiece() {
   checkForLineClear();
 }
 
+// doesn't work for multiple lines
 void checkForLineClear() {
 
   char canClear;
@@ -304,10 +305,15 @@ void clearLine(char row) {
 
 void render() {
 
+  int bStartX, bStartY;
+
+  bStartX = COLS / 2 - 6;
+  bStartY = LINES / 2 - 11;
+
   // draw board
   for(int y = 0; y < HEIGHT; y++) {
     for(int x = 0; x < WIDTH; x++) {
-      mvaddch(y,x,board[y][x]);
+      mvaddch(bStartY + y,bStartX + x,board[y][x]);
     }
   }
 
@@ -316,7 +322,17 @@ void render() {
   for(int i = 0; i < 4; i++){
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
-    mvaddch(posY,posX,'X');
+    mvaddch(bStartY + posY,bStartX + posX,'X');
+  }
+
+  // draw border
+  for(int y = 0; y < 19; y++) {
+    mvaddch(bStartY + 1 + y, bStartX - 1, '|');
+    mvaddch(bStartY + 1 + y, bStartX + 10, '|');
+  }
+  for(int x = 0; x < 12; x++) {
+    mvaddch(bStartY, bStartX - 1 + x, '-');
+    mvaddch(bStartY + 20, bStartX - 1 + x, '-');
   }
 
   // print it onto the real screen
