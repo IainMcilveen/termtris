@@ -6,6 +6,15 @@ Why? Because I really like Tetris.
 
 ![Alt Text](https://cdn.discordapp.com/attachments/665849154186248202/935680885414572122/termtris_cropped.gif)
 
+Requirements:
+
+- Currently only works under linux
+- uses gcc to compile
+- you must have ncurses installed
+  - Void Linux: xbps-install -S ncurses-devel
+  - Arch Linux/Manjaro: sudo pacman -S ncurses
+  - Debian based Distros: sudo apt install libncurses5-dev libncursesw5-dev
+
 The current control scheme is:
 
 1. A: Left
