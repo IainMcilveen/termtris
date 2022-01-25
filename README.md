@@ -8,7 +8,7 @@ The current control scheme is:
 2. D: Right
 3. N: Rotate Piece counter clockwise
 4. M: Rotate Piece clockwise
-5. Q: quit Termtris
+5. Q: Quit Termtris
 
 Planned improvements:
 
