@@ -4,6 +4,8 @@ This is a minimal implementation of Tetris which can be played from the convenie
 
 Why? Because I really like Tetris.
 
+![Alt Text](https://cdn.discordapp.com/attachments/665849154186248202/935680885414572122/termtris_cropped.gif)
+
 The current control scheme is:
 
 1. A: Left
