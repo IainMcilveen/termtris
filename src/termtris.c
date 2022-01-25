@@ -59,6 +59,9 @@ void init() {
   curPiece = pieces[cur];
   nextPiece = pieces[next];
 
+  render();
+  sleep(1);
+
 }
 
 /*
