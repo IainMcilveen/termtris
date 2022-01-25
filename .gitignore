@@ -1,5 +1,5 @@
-*
-!*.c
-!*.h
+src/*
+!src/*.c
+!src/*.h
 !Makefile
 

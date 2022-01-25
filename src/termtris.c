@@ -33,6 +33,7 @@ void init()
   noecho();              // don't show input on screen
   nodelay(stdscr, TRUE); // no delay on inputs
   nocbreak();            // disable line buffering
+  curs_set(0);           // hide cursor
 
   // init board
   for (int y = 0; y < HEIGHT; y++)
