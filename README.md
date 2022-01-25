@@ -16,3 +16,4 @@ Planned improvements:
 - Add second control scheme which uses the arrow keys
 - Add delayed auto shift on the side to side movement
 - Add ability to push down to increase drop speed
+- Add scores and levels with drop speed increases
