@@ -26,6 +26,7 @@ The current control scheme is:
 Planned improvements:
 
 - Change the character set to make pieces and board easier to follow as you play
+- Add a game over screen of some kind
 - Add second control scheme which uses the arrow keys
 - Add delayed auto shift on the side to side movement
 - Add ability to push down to increase drop speed

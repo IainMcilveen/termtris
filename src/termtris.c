@@ -287,7 +287,7 @@ void updatePieceDown()
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
     if (board[posY + 1][posX] == 'X' || posY + 1 > 19)
     {
-      if (posY == 0)
+      if (curPiece.row <= 1)
       {
         input[4][0] = 1;
       }
@@ -319,7 +319,6 @@ void placePiece()
   checkForLineClear();
 }
 
-// doesn't work for multiple lines
 void checkForLineClear()
 {
 
