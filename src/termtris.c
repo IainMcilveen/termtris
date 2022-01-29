@@ -75,6 +75,9 @@ void updateInput() {
     input[i][0] = 0;
   }
 
+  // reset push down
+  input[5][0] = 0;
+
   // process inputs
   char c;
   while ((c = getch()) != ERR)  {
@@ -132,13 +135,7 @@ void updateInput() {
       break;
     case 's':
       temp[5] = 1;
-      if (input[5][1] == 0) {
-        input[5][0] = 1;
-      }
-      else {
-        input[5][0] = 0;
-      }
-      input[5][1] = 1;
+      input[5][0] = 1;
       break;
     }
   }
@@ -161,7 +158,13 @@ int update() {
     updatePieceRotation();
   }
 
-  if (ticks > 8) {
+  if (input[5][0] == 1) {
+    tickNeeded = 0;
+  } else {
+    tickNeeded = 8;
+  }
+
+  if (ticks > tickNeeded) {
     updatePieceDown();
     ticks = 0;
   }

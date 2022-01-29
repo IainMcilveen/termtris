@@ -18,6 +18,7 @@ typedef struct{
 // Define Variables
 int gameRunning = 1;
 int ticks = 100;
+int tickNeeded = 8;
 char board[HEIGHT][WIDTH];
 char input[6][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};   //{'A','D','N','M','Q','S'} 
 char pieceRotations[7][4][4][2] = {
