@@ -412,7 +412,6 @@ void render() {
   }
   for (int i = 0; i < 7; i++) {
     mvaddch(nStartY - 1, nStartX - 1 + i, '-');
-    mvaddch(nStartY + 2, nStartX - 1 + i, '-');
     mvaddch(nStartY + 4, nStartX - 1 + i, '-');
   }
   attroff(COLOR_PAIR(BORDER_PAIR));
