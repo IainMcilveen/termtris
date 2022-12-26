@@ -10,6 +10,12 @@
 #define WIDTH   10
 #define HEIGHT  20
 
+#define PIECE_PAIR 1
+#define SET_PAIR 2
+#define BORDER_PAIR 3
+
+#define PIECE_CHAR 'X'
+
 // Define structs
 typedef struct{
     int index, rot, row, col;
@@ -125,3 +131,4 @@ void updatePieceRotation();
 void placePiece();
 void checkForLineClear();
 void clearLine(int);
+void init_colours();
