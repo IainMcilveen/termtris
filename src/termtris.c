@@ -284,6 +284,7 @@ void placePiece() {
 void checkForLineClear() {
 
   char canClear;
+  int linesCleared = 0;
   for (int y = 19; y >= 0; y--) {
 
     canClear = 1;
@@ -296,8 +297,25 @@ void checkForLineClear() {
 
     if (canClear == 1) {
       clearLine(y);
+      linesCleared++;
       y++;
     }
+  }
+  switch (linesCleared) {
+    case 1:
+      score += 40;
+      break;
+    case 2:
+      score += 100;
+      break;
+    case 3:
+      score += 300;
+      break;
+    case 4:
+      score += 1200;
+      break;
+    default:
+      break;
   }
 }
 
@@ -371,6 +389,10 @@ void render() {
   // next text
   mvprintw(nStartY - 2, nStartX, "next \n");
 
+  char* scoreBuffer = malloc(1000);
+  sprintf(scoreBuffer, "%d", score);
+  // itoa(score, &scoreBuffer, 10);
+
   // draw next Piece
   for (int i = 0; i < 4; i++) {
     posX = pieceRotations[nextPiece.index][0][i][0] - 3;
@@ -390,10 +412,14 @@ void render() {
   }
   for (int i = 0; i < 7; i++) {
     mvaddch(nStartY - 1, nStartX - 1 + i, '-');
+    mvaddch(nStartY + 2, nStartX - 1 + i, '-');
     mvaddch(nStartY + 4, nStartX - 1 + i, '-');
   }
   attroff(COLOR_PAIR(BORDER_PAIR));
 
+   mvprintw(nStartY -10, nStartX, "score\n");
+   mvprintw(nStartY -9, nStartX, scoreBuffer);
+ 
   // print it onto the real screen
   refresh();
 }
