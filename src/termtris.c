@@ -21,6 +21,12 @@ int main() {
   endwin();     // end ncurses
   return 0;
 }
+void init_colours(){
+  start_color();
+  init_pair(PIECE_PAIR, COLOR_CYAN, COLOR_CYAN);
+  init_pair(SET_PAIR, COLOR_WHITE, COLOR_WHITE);
+  init_pair(BORDER_PAIR, COLOR_BLUE, COLOR_BLUE);
+}
 
 // initalize everything
 void init() {
@@ -32,6 +38,7 @@ void init() {
   nodelay(stdscr, TRUE); // no delay on inputs
   nocbreak();            // disable line buffering
   curs_set(0);           // hide cursor
+  init_colours();        // sets the colours
 
   // init board
   for (int y = 0; y < HEIGHT; y++) {
@@ -183,10 +190,10 @@ void updatePieceColumn() {
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
 
-    if (posX - 1 < 0 || board[posY][posX - 1] == 'X') {
+    if (posX - 1 < 0 || board[posY][posX - 1] == PIECE_CHAR) {
       canLeft = 0;
     }
-    if (posX + 1 > 9 || board[posY][posX + 1] == 'X') {
+    if (posX + 1 > 9 || board[posY][posX + 1] == PIECE_CHAR) {
       canRight = 0;
     }
   }
@@ -216,13 +223,13 @@ void updatePieceRotation() {
 
     posX = pieceRotations[curPiece.index][rotCCW][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][rotCCW][i][1] + curPiece.row;
-    if (posX < 0 || posX > 9 || posY < 0 || posY > 19 || board[posY][posX] == 'X') {
+    if (posX < 0 || posX > 9 || posY < 0 || posY > 19 || board[posY][posX] == PIECE_CHAR) {
       canRotCCW = 0;
     }
 
     posX = pieceRotations[curPiece.index][rotCW][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][rotCW][i][1] + curPiece.row;
-    if (posX < 0 || posX > 9 || posY < 0 || posY > 19 || board[posY][posX] == 'X') {
+    if (posX < 0 || posX > 9 || posY < 0 || posY > 19 || board[posY][posX] == PIECE_CHAR) {
       canRotCW = 0;
     }
   }
@@ -245,7 +252,7 @@ void updatePieceDown() {
   for (int i = 0; i < 4; i++) {
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
-    if (board[posY + 1][posX] == 'X' || posY + 1 > 19) {
+    if (board[posY + 1][posX] == PIECE_CHAR || posY + 1 > 19) {
       if (curPiece.row <= 1) {
         input[4][0] = 1;
       }
@@ -265,7 +272,7 @@ void placePiece() {
   for (int i = 0; i < 4; i++) {
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
-    board[posY][posX] = 'X';
+    board[posY][posX] = PIECE_CHAR;
   }
   curPiece = nextPiece;
   int next = rand() % 7;
@@ -282,7 +289,7 @@ void checkForLineClear() {
 
     canClear = 1;
     for (int x = 0; x < 10; x++) {
-      if (board[y][x] != 'X')
+      if (board[y][x] != PIECE_CHAR)
       {
         canClear = 0;
       }
@@ -331,21 +338,31 @@ void render() {
   bStartY = LINES / 2 - 11;
 
   // draw board
+
   for (int y = 0; y < HEIGHT; y++) {
     for (int x = 0; x < WIDTH; x++) {
+      if (board[y][x] == PIECE_CHAR){
+        //  attron(A_BLINK);
+         attron(A_BLINK | COLOR_PAIR(SET_PAIR));
+      }
       mvaddch(bStartY + y, bStartX + x, board[y][x]);
+      // attroff(A_BLINK);
+      attroff(A_BLINK | COLOR_PAIR(SET_PAIR));
+
     }
   }
-
   // draw current Piece
   char posX, posY;
   for (int i = 0; i < 4; i++) {
     posX = pieceRotations[curPiece.index][curPiece.rot][i][0] + curPiece.col;
     posY = pieceRotations[curPiece.index][curPiece.rot][i][1] + curPiece.row;
-    mvaddch(bStartY + posY, bStartX + posX, 'X');
+    attron(COLOR_PAIR(PIECE_PAIR));
+    mvaddch(bStartY + posY, bStartX + posX, PIECE_CHAR);
+    attroff(COLOR_PAIR(PIECE_PAIR));
   }
 
   // draw border
+  attron(COLOR_PAIR(BORDER_PAIR));
   for (int y = 0; y < 19; y++) {
     mvaddch(bStartY + 1 + y, bStartX - 1, '|');
     mvaddch(bStartY + 1 + y, bStartX + 10, '|');
@@ -354,14 +371,16 @@ void render() {
     mvaddch(bStartY, bStartX - 1 + x, '-');
     mvaddch(bStartY + 20, bStartX - 1 + x, '-');
   }
-
   int nStartX, nStartY;
 
   nStartX = COLS / 2 + 7;
   nStartY = LINES / 2 - 1;
 
+  attroff(COLOR_PAIR(BORDER_PAIR));
+
+
   // clear next Piece area
-  for (int y = nStartY; y < nStartY + 5; y++) {
+  for (int y = nStartY; y < nStartY + 3; y++) {
     for (int x = nStartX; x < nStartX + 5; x++) {
       mvaddch(y, x, ' ');
     }
@@ -377,19 +396,26 @@ void render() {
   // draw next Piece
   for (int i = 0; i < 4; i++) {
     posX = pieceRotations[nextPiece.index][0][i][0] - 3;
-    posY = pieceRotations[nextPiece.index][0][i][1];
-    mvaddch(nStartY + posY, nStartX + posX, 'X');
+    posY = pieceRotations[nextPiece.index][0][i][1] + 1;
+    attron(COLOR_PAIR(PIECE_PAIR));
+    mvaddch(nStartY + posY, nStartX + posX, PIECE_CHAR);
+    attroff(COLOR_PAIR(PIECE_PAIR));
+
   }
 
+  attron(COLOR_PAIR(BORDER_PAIR));
+
   // draw next Piece border
-  for (int i = 0; i < 3; i++) {
+  for (int i = -1; i < 5; i++) {
     mvaddch(nStartY + i, nStartX - 1, '|');
     mvaddch(nStartY + i, nStartX + 5, '|');
   }
   for (int i = 0; i < 7; i++) {
     mvaddch(nStartY - 1, nStartX - 1 + i, '-');
     mvaddch(nStartY + 2, nStartX - 1 + i, '-');
+    mvaddch(nStartY + 4, nStartX - 1 + i, '-');
   }
+  attroff(COLOR_PAIR(BORDER_PAIR));
 
    mvprintw(nStartY -10, nStartX, "score\n");
    mvprintw(nStartY -9, nStartX, scoreBuffer);
