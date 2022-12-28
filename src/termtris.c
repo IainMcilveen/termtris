@@ -19,6 +19,8 @@ int main() {
 
   free(pieces); // free dynamically allocated memory
   endwin();     // end ncurses
+
+  printf("Game Over\nScore: %d\n", score); // print score after game over
   return 0;
 }
 void init_colours(){
